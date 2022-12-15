@@ -1,6 +1,7 @@
 from kivy_garden.graph import Graph
 from kivy.clock import Clock
 
+
 class TimeSeriesGraph(Graph):
     """
     Classe derivada que implementa a possibilidade de se plotar 

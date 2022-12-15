@@ -79,3 +79,63 @@
                 text: "Fechar"
                 on_release:
                     root.dismiss()
+<DataGraphPopup>:
+    title: "Gráfico de temperatura na fornalha"
+    BoxLayout:
+        orientation: "vertical"
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Temperatura [°C]'
+            background_color: 0.5,0.5.0.5.0.5
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 100
+            y_grid_label: True 
+            x_grid_label: True 
+            padding: 5
+            x_grid: True 
+            y grid: True 
+            xmin: 0
+            yain: 0
+            yax: 500
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1,0.05)
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: (0.5,1) 
+                Label:
+                    size_hint: (0.34)
+                    text: "Número de pontos do gráfico"
+                LabeledCheckBoxDataGraph:
+                    id: mp20
+                    on_kv_post:
+                        self.ids.label.text - '20'
+                        self.ids.label.group- 'cb_group'
+                LabeledCheckBoxDataGraph:
+                    id: mp50
+                    on_kv_post:
+                        self.ids.label.text - '50'
+                        self.ids.label.group- 'cb_group'
+                LabeledCheckBoxDataGraph:
+                    id: mp100
+                    on_kv_post:
+                        self.ids.label.text - '100'
+                        self.ids.label.group- 'cb_group'
+            Button:
+                text: "Fechar"
+                size_hint: (0.2,1) 
+                on release: root.dismiss()
+
+
+# LabeledCheckBoxDataGraph definido na class em popups para nao ficar reptindo BoxLayout do <DataGraphPopup>:
+<LabeledCheckBoxDataGraph>:
+    orientation: 'horizontal'
+    size hint: (0.1,1)
+    CheckBox:
+        id: checkbox
+        # Irá dar set em app.root._graph.ids.graph.setMaxPoints se app.root existir
+        on_active: app.root._graph.ids.graph.setMaxPoints(int(label.text),0) if app.root is not None else None
+    Label:
+        id: label

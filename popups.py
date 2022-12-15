@@ -1,6 +1,7 @@
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
-
+from kivy_garden.graph import LinePlot
+from kivy.uix.boxlayout import BoxLayout
 
 class ModbusPopup(Popup):
     '''
@@ -33,3 +34,16 @@ class ScanPopup(Popup):
         ''' 
         super().__init__(**kwargs)
         self.ids.txt_st.text = str(scantime)
+
+class DataGraphPopup(Popup):
+    '''
+    Popup do gráfico do fornalha
+    '''
+    def _init_(self,xmax, plot_color, **kwargs): 
+        super()._init_(*kwargs)
+        self.plot = LinePlot(line_width = 1.5, color = plot_color)
+        self.ids.graph.add_plot(self.plot) 
+        self.ids.graph.xmax = xmax
+
+class LabeledCheckBoxDataGraph(BoxLayout):
+    pass

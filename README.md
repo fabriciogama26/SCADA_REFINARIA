@@ -14,3 +14,7 @@ software de controle de supervisão dados
  
  
  
+  ![Video demonstração](https://github.com/fabriciogama26/SCADA_REFINARIA/blob/main/refinariagif.gif)
+ 
+ 
+ 

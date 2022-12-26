@@ -112,7 +112,7 @@
                     id: mp20
                     on_kv_post:
                         self.ids.label.text = '20'
-                        self.ids.checkbox.group ='cb_group'
+                        self.ids.checkbox.group = 'cb_group'
                         self.ids.checkbox.active = 'cb_group'
                 LabeledCheckBoxDataGraph:
                     id: mp50
@@ -140,3 +140,126 @@
         on_active: app.root._graph.ids.graph.setMaxPoints(int(label.text),0) if app.root is not None else None
     Label:
         id: label
+
+<HistGraphPopup>:
+    title: "Histórico de temperatura na refinaria"
+    BoxLayout:
+        orientation: "vertical"
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_x: 1
+            size_hint_y: 0.2/2
+            padding: 10
+            spacing: 10
+            BoxLayout:
+                orientation: "vertical"
+                Button:
+                    id: limpar
+                    text: 'Desmarcar todos'
+                    size_hint: (0.1,0.2)
+                    on_release:
+                        root.uncheck_all()
+        TimeSeriesGraph:
+            id: graph
+            xlabel: 'Horário'
+            ylabel: 'Temperatura [°C]'
+            background_color: 0.5,0.5,0.5,0.5
+            x_ticks_minor: 1
+            x_ticks_major: 5
+            y_ticks_major: 100
+            y_grid_label: True 
+            x_grid_label: True 
+            padding: 5
+            x_grid: True 
+            y_grid: True 
+            xmin: 0
+            ymin: 0
+            ymax: 500
+        BoxLayout:
+            id: sensores
+            orientation: 'horizontal'
+            size_hint: (1,0.1)
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1,0.1)
+            Label:
+                text:'Timestamp inicial \r\n [size=12] (DD/MM/AAAA HH:MM:SS)[/size]'
+                haling: 'center'
+                markap: True
+                font_size: 12 
+            TextInput:
+                id: txt_init_time 
+                size_hint: (1,0.8) 
+                halign: 'center' 
+                valign: 'middle' 
+                multiline: False
+            Label:
+                text:'Timestamp final \r\n [size=12] (DD/MM/AAAA HH:MM:SS)[/size]'
+                haling: 'center'
+                markap: True
+                font_size: 12 
+            TextInput:
+                id: txt_final_time 
+                size_hint: (1,0.8) 
+                halign: 'center' 
+                valign: 'middle' 
+            Button:
+                text: "Fechar"
+                size_hint: (1,0.8) 
+                on_release:                   
+                    root.dismiss() 
+
+# LabeledCheckBoxHistGraph definido na class em popups para nao ficar reptindo BoxLayout do <HistGraphPopup>:
+<LabeledCheckBoxHistGraph>:
+    orientation: 'horizontal'
+    size_hint: (0.05,1)
+    CheckBox:
+        id: checkbox
+        # Irá dar chamar root.getDataDB() para criar os graficos referente as tags selecionadas
+        on_active: app.root.getDataDB()
+    Label:
+        id: label
+        font_size: 12 
+        bold: True
+
+<DataErroPopup>:
+    title: "DADOS DE ERROS"
+    BoxLayout:
+        orientation: "horizontal"
+        BoxLayout:
+            orientation: "vertical"
+            Label:
+                id: error_label
+                background_color: 1,1,1
+                size_hint: (0.3,1)
+                font_size: 12
+                font_color: 1, 0, 0, 1
+                markap: True
+                text: " \n"
+                halign: 'left'
+                valign: 'middle'
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: (1,0.1)
+                Label:
+                    text:'Data \r\n [size=12] (DD/MM/AAAA)[/size]'
+                    haling: 'center'
+                    markap: True
+                    font_size: 12 
+                TextInput:
+                    id: txt_data_erro
+                    size_hint: (1,0.8) 
+                    halign: 'center' 
+                    valign: 'middle' 
+                    multiline: False
+                Button:
+                    text: "Procurar"
+                    size_hint: (1,0.8) 
+                    on_release:                   
+                        app.root.getDataDBErro()
+                Button:
+                    text: "Fechar"
+                    size_hint: (1,0.8) 
+                    on_release:                   
+                        root.dismiss() 
+        
